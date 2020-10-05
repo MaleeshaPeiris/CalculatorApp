@@ -203,7 +203,7 @@
 
         <Button
             android:id="@+id/buttonmultiply"
-            android:text="x"
+            android:text="*"
             android:textSize="30dp"
             android:layout_width="110dp"
             android:layout_height="match_parent"
