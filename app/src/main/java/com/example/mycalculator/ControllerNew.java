@@ -5,7 +5,8 @@ public class ControllerNew {
     float dOneValue1,dOneValue2,dTwoValue;
     String num1,num2,num3,dOneFullText,dTwoFullText;
     boolean x,y,hasDisplayed;
-    ExpressionController eController = new ExpressionController();
+    //ExpressionController eController = new ExpressionController();
+    ExpressionController eController = new ExpressionContrllerExtended();
 
     public String clearClontroller(){
         num1="";
@@ -76,7 +77,7 @@ public class ControllerNew {
         }
 
         else {
-            dTwoValue = eController.setValues(num1);
+            dTwoValue = eController.getAnswer(num1);
             dTwoFullText = String.valueOf(dTwoValue);
             hasDisplayed = true;
 
@@ -102,13 +103,8 @@ public class ControllerNew {
                     num2 = "";
                     dOneFullText = num1;
                 }
-                else if(num1.contains(".")){
-
-
-                    if(!num1.contains(".")){
-                        num2 = "";
-                        dOneFullText = num1;
-                    }
+                else {
+                    dOneFullText=num1+num2;
                 }
             }
         }

@@ -7,24 +7,26 @@ import java.util.Stack;
 public class ExpressionController {
     String value1;
     int opCount;
-    ArrayList<Character> operators = new ArrayList<>();
+    ArrayList<Character> operators = new ArrayList<Character>();
+    ArrayList<String> numericValues ;
     String[] values;
     float num1,num2;
     char operator;
 
     public void clearData(){
         operators.clear();
-       Arrays.fill(values,null);
+       numericValues.clear();
 
     }
 
 
     public int getOpCount(String value1){
         this.value1=value1;
-
+        opCount=0;
         for (int i=0; i < value1.length(); i++) {
             if (value1.charAt(i) == '+' || value1.charAt(i) == '-' ||
                     value1.charAt(i) == '/' || value1.charAt(i) == '*') {
+
                 opCount++;
                 operators.add(value1.charAt(i));
 
@@ -34,37 +36,77 @@ public class ExpressionController {
         return opCount;
     }
 
-
-
-    public float setValues(String value1){
+    public void storeValues(String value1){
         this.value1=value1;
-        opCount=getOpCount(value1);
-       values = value1.split("\\+|\\-|\\/|\\*",opCount+1);
-        num1 = Float.parseFloat(values[0]);
+      //  opCount=getOpCount(value1);
+        values = value1.split("\\+|\\-|\\/|\\*",opCount+1);
+        numericValues = new ArrayList<String>(Arrays.asList(values));
+        values=null;
+
+    }
+
+
+
+
+    public float getAnswer(String value1){
+        this.value1=value1;
+ //       numericValues.clear();
+        storeValues(value1);
+        operators.clear();
+        opCount = getOpCount(value1);
+
+        num1 = Float.parseFloat(numericValues.get(0));
         num2=0;
-        int  j = 0;
-        for(int i=1;i < values.length;i++){
-            num2 = Float.parseFloat(values[i]);
-            operator = operators.get(j);
+       int  j = 0;
+        for(int i=1;i < numericValues.size();i++){
+            num2 = Float.parseFloat(numericValues.get(i));
+           operator = operators.get(j);
+
             if(operator == '+'){
                 num1 = num1 + num2;
-                return num1;
             }
+
             else if(operator=='-'){
                 num1 = num1 - num2;
-                return num1;
             }
+
             else if(operator=='/') {
                 num1 = num1 / num2;
-                return num1;
             }
+
             else if(operator=='*'){
                 num1= num1*num2;
             }
 
+           j++;
         }
-        j++;
+
         return num1;
+    }
+
+
+
+
+
+    public String[] removeTheElement(String[] arr, int index)
+    {
+        if (arr == null
+                || index < 0
+                || index >= arr.length) {
+
+            return arr;
+        }
+
+        String[] anotherArray = new String[arr.length - 1];
+        for (int i = 0, k = 0; i < arr.length; i++) {
+
+            if (i == index) {
+                continue;
+            }
+            anotherArray[k++] = arr[i];
+        }
+
+        return anotherArray;
     }
 /*
 
