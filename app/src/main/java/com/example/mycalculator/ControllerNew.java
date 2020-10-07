@@ -31,6 +31,7 @@ public class ControllerNew {
                 dOneFullText=num2;
             }
             else{
+
                 dOneFullText=num1+num2;
             }
         }
@@ -103,8 +104,16 @@ public class ControllerNew {
                     num2 = "";
                     dOneFullText = num1;
                 }
+
                 else {
-                    dOneFullText=num1+num2;
+                   // int a = eController.numericValues.size()-1;
+                    //String b = eController.numericValues.get(a);
+                  //  if(b.contains(".")){
+                    //    dOneFullText=num1;
+                    //}
+                    //else {
+                        dOneFullText = num1 + num2;
+                    //}
                 }
             }
         }

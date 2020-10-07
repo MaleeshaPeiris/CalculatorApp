@@ -15,8 +15,7 @@ public class ExpressionController {
 
     public void clearData(){
         operators.clear();
-       numericValues.clear();
-
+      //  numericValues.clear();
     }
 
 
@@ -36,9 +35,10 @@ public class ExpressionController {
         return opCount;
     }
 
+
+
     public void storeValues(String value1){
         this.value1=value1;
-      //  opCount=getOpCount(value1);
         values = value1.split("\\+|\\-|\\/|\\*",opCount+1);
         numericValues = new ArrayList<String>(Arrays.asList(values));
         values=null;
@@ -84,52 +84,5 @@ public class ExpressionController {
         return num1;
     }
 
-
-
-
-
-    public String[] removeTheElement(String[] arr, int index)
-    {
-        if (arr == null
-                || index < 0
-                || index >= arr.length) {
-
-            return arr;
-        }
-
-        String[] anotherArray = new String[arr.length - 1];
-        for (int i = 0, k = 0; i < arr.length; i++) {
-
-            if (i == index) {
-                continue;
-            }
-            anotherArray[k++] = arr[i];
-        }
-
-        return anotherArray;
-    }
-/*
-
-    public enum Operation {
-        PLUS('+'),
-        MINUS('-'),
-        TIMES('*'),
-        DIVIDE('/');
-        private final char symbol;
-
-        Operation(char symbol) {
-            this.symbol = symbol; }
-
-
-        public char toChar() {
-            return symbol; }
-        }
-
-    public void checkOp(){
-        if(Operation.PLUS.toChar()=='+') {
-
-        }
-    }
-*/
 
 }

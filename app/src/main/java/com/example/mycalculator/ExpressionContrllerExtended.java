@@ -1,21 +1,17 @@
 package com.example.mycalculator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 
 public class ExpressionContrllerExtended extends ExpressionController {
-  //  ArrayList<String> newValueOrder = new ArrayList>String>();
-    float answer, fracAnswer;
+    ArrayList<String> newValueOrder = new ArrayList<String>();
+    float answer;
     String answerText;
-    String[] newExpression;
     String x;
 
     public void clearData() {
         super.clearData();
         answer = (float) 0.0;
+        newValueOrder.clear();
         answerText = "";
     }
 
@@ -25,64 +21,116 @@ public class ExpressionContrllerExtended extends ExpressionController {
         x = value1;
         opCount = getOpCount(value1);
         storeValues(value1);
-        // for(int i =0; ){}
-        answer = getExtendedAnswer(value1);
-        return answer;
+         for(int i =0; i<operators.size();i++ ){
+
+             newValueOrder.add(numericValues.get(i));
+             newValueOrder.add(String.valueOf(operators.get(i)));
+         }
+
+         newValueOrder.add(numericValues.get(operators.size()));
+         answerText = finalAnswer(newValueOrder);
+         answer = Float.parseFloat(answerText);
+         return answer;
 
     }
 
-    public float getExtendedAnswer(String value1) {
-        this.value1 = value1;
 
-        if (!(operators.contains('*') || operators.contains('/'))) {
-            opCount = getOpCount(value1);
-            answer = super.getAnswer(value1);
-        } else {
-            //storeValues(value1);
-            //opCount = getOpCount(value1);
-            //  for(int i=0; i<operators.size(); i++) {
-            value1 = setExpressionOrder(numericValues, operators);
-            answer = super.getAnswer(value1);
-            // }
-        }
-
-
-        return answer;
-    }
 
 //evaluate expression using binary
 
-    public String setExpressionOrder(ArrayList<String> numericValues, ArrayList<Character> operators) {
-        // numericValues=values;
-        for (int i = 0; i < operators.size(); i++) {
-            if (operators.get(i) == '*') {
-                answerText = numericValues.get(i) + operators.get(i) + numericValues.get(i + 1);
-                //getOpCount(answerText);
-                // fracAnswer= super.getAnswer(answerText);
-            } else if (operators.get(i) == '/') {
-                answerText = numericValues.get(i) + operators.get(i) + numericValues.get(i + 1);
-                //getOpCount(answerText);
 
 
+
+    public String finalAnswer(ArrayList<String> array){
+        if(array.contains("*")&& array.contains("/")) {
+          //  while (!array.contains("*")) {
+            if(array.indexOf("*")>array.indexOf("/")){
+                int i = array.indexOf("/");
+                float temp = Float.parseFloat(array.get(i - 1)) / Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
             }
-
-            if ((operators.get(i) == '*') == true || (operators.get(i) == '/') == true) {
-                fracAnswer = super.getAnswer(answerText);
-
-                numericValues.set(i, String.valueOf(fracAnswer));
-                numericValues.remove(i + 1);
-                getOpCount(value1);
-                {
-                    operators.remove(i);
-
-                    value1 = x.replace(answerText, String.valueOf(fracAnswer));
-                }
-
+            else{
+                int i = array.indexOf("*");
+                float temp = Float.parseFloat(array.get(i - 1)) * Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
             }
-            //  answer = getAnswer(numericValues,operators);
-
-
+            finalAnswer(array);
         }
-        return value1;
+
+
+        if(array.contains("*") ^ array.contains("/")){
+            if(array.indexOf("/") == -1 ){
+                int i = array.indexOf("*");
+                float temp = Float.parseFloat(array.get(i - 1)) * Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
+            }
+            else{
+
+                int i = array.indexOf("/");
+                float temp = Float.parseFloat(array.get(i - 1)) / Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
+            }
+            finalAnswer(array);
+        }
+
+
+        if(array.contains("+")&& array.contains("-")) {
+            //  while (!array.contains("*")) {
+            if(array.indexOf("+")>array.indexOf("-")){
+                int i = array.indexOf("-");
+                float temp = Float.parseFloat(array.get(i - 1)) - Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
+            }
+            else{
+                int i = array.indexOf("+");
+                float temp = Float.parseFloat(array.get(i - 1)) + Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
+            }
+            finalAnswer(array);
+        }
+
+
+        if(array.contains("+") ^ array.contains("-")){
+            if(array.indexOf("-") == -1 ){
+                int i = array.indexOf("+");
+                float temp = Float.parseFloat(array.get(i - 1)) + Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
+            }
+            else{
+
+                int i = array.indexOf("-");
+                float temp = Float.parseFloat(array.get(i - 1)) - Float.parseFloat(array.get(i + 1));
+                String tempString = String.valueOf(temp);
+                array.set(i - 1, tempString);
+                array.remove(i);
+                array.remove(i);
+            }
+            finalAnswer(array);
+        }
+
+        answerText = array.get(0);
+        return answerText;
     }
+
 }

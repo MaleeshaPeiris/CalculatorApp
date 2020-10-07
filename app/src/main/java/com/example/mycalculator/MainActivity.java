@@ -224,8 +224,9 @@ public class MainActivity extends AppCompatActivity {
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                diplay_line1.setText(mNewController.clearClontroller());
-                display_line2.setText(mNewController.clearClontroller());
+                mNewController.clearClontroller();
+                diplay_line1.setText("");
+                display_line2.setText("");
             }
         });
 
