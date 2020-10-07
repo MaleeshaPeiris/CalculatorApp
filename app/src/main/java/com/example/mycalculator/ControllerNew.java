@@ -1,22 +1,53 @@
 package com.example.mycalculator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class ControllerNew {
 
-    float dOneValue1,dOneValue2,dTwoValue;
-    String num1,num2,num3,dOneFullText,dTwoFullText;
-    boolean x,y,hasDisplayed;
-    //ExpressionController eController = new ExpressionController();
-    ExpressionController eController = new ExpressionContrllerExtended();
+    float dTwoValue;
+    String num1,num2,dOneFullText,dTwoFullText;
+    boolean hasDisplayed;
+    private boolean mNormalMode=true;
+    private ExpressionController currentController=null;
+    private ExpressionController scientificController = new ExpressionContrllerExtended();
+    private ExpressionController normalController = new ExpressionController();
+    ArrayList<String> numeratorValidator = new ArrayList<String>();
+    String[] toValidateNumbers;
+    int opCounttoValidate;
+
 
     public String clearClontroller(){
         num1="";
         num2="";
         hasDisplayed=false;
         dOneFullText="";
-        eController.clearData();
+        scientificController.clearData();
         return "";
     }
 
+
+    public ControllerNew(){
+        currentController= normalController;
+    }
+
+
+
+    public void changeMode(boolean normalMode){
+        if(normalMode==mNormalMode){
+            return;
+        }
+        else{
+            if(normalMode==true){
+                currentController=normalController;
+            }
+            else{
+                currentController=scientificController;
+
+            }
+            mNormalMode=normalMode;
+        }
+    }
 
     public String numericTextController(String num1,String num2){
         this.num1=num1;
@@ -37,6 +68,7 @@ public class ControllerNew {
         }
 
         return dOneFullText;
+
     }
     public String operatorText(String num1,String num2){
         this.num1=num1;
@@ -60,7 +92,11 @@ public class ControllerNew {
                     dOneFullText = num1;
                 }
                 else {
+                    numeratorValidator.clear();
+                    storeValuestoValidate(num1);
                     dOneFullText = num1 + num2;
+
+
                 }
             }
         }
@@ -68,7 +104,29 @@ public class ControllerNew {
         return dOneFullText;
     }
 
+    public void storeValuestoValidate(String value1){
+        getOpCounttoValidate(value1);
+        toValidateNumbers = value1.split("\\+|\\-|\\/|\\*",opCounttoValidate+1);
+        numeratorValidator = new ArrayList<String>(Arrays.asList(toValidateNumbers));
+        toValidateNumbers=null;
 
+    }
+
+    public int getOpCounttoValidate(String value1){
+
+        opCounttoValidate=0;
+        for (int i=0; i < value1.length(); i++) {
+            if (value1.charAt(i) == '+' || value1.charAt(i) == '-' ||
+                    value1.charAt(i) == '/' || value1.charAt(i) == '*') {
+
+                opCounttoValidate++;
+
+
+            }
+        }
+
+        return opCounttoValidate;
+    }
 
 
     public String equalDisplayTwo(String num1){
@@ -78,10 +136,10 @@ public class ControllerNew {
         }
 
         else {
-            dTwoValue = eController.getAnswer(num1);
-            dTwoFullText = String.valueOf(dTwoValue);
-            hasDisplayed = true;
 
+                dTwoValue = currentController.getAnswer(num1);
+                dTwoFullText = String.valueOf(dTwoValue);
+                hasDisplayed = true;
         }
         return dTwoFullText;
     }
@@ -106,14 +164,14 @@ public class ControllerNew {
                 }
 
                 else {
-                   // int a = eController.numericValues.size()-1;
-                    //String b = eController.numericValues.get(a);
-                  //  if(b.contains(".")){
-                    //    dOneFullText=num1;
-                    //}
-                    //else {
+
+                    if(numeratorValidator.get(numeratorValidator.size()-1).contains(".")) {
+                        dOneFullText = num1;
+                    }
+                    else{
                         dOneFullText = num1 + num2;
-                    //}
+                    }
+
                 }
             }
         }

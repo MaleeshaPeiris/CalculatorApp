@@ -12,6 +12,7 @@ public class ExpressionController {
     String[] values;
     float num1,num2;
     char operator;
+    //boolean normalMode;
 
     public void clearData(){
         operators.clear();
@@ -51,9 +52,10 @@ public class ExpressionController {
     public float getAnswer(String value1){
         this.value1=value1;
  //       numericValues.clear();
-        storeValues(value1);
         operators.clear();
         opCount = getOpCount(value1);
+        storeValues(value1);
+
 
         num1 = Float.parseFloat(numericValues.get(0));
         num2=0;
