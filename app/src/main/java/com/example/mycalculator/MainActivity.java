@@ -3,26 +3,29 @@ package com.example.mycalculator;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
 
     Button button1, button2, button3, button4, button5, button6, button7, button8, button9, button0, buttonAdd, buttonDiv, buttonClear, buttonSub, buttonEq, buttonMul;
+    Button buttonX,buttonPower,buttonSquared;
     TextView diplay_line1, display_line2;
     ControllerNew mNewController;
+    polynomialController mPolyController;
     Button buttonDot;
-    RadioButton rbNormal, rbScientific;
+    LinearLayout polyView;
 
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,37 +47,29 @@ public class MainActivity extends AppCompatActivity {
         buttonEq = findViewById(R.id.buttonequals);
         buttonDot = findViewById(R.id.buttondot);
         buttonMul = findViewById(R.id.buttonmultiply);
+        buttonX = findViewById(R.id.buttonX);
+        buttonPower = findViewById(R.id.buttonpower);
+        buttonSquared = findViewById(R.id.buttonsquared);
+
         diplay_line1 = findViewById(R.id.textView3);
         diplay_line1.setText(null);
         display_line2 = findViewById(R.id.textView2);
         display_line2.setText(null);
-        rbNormal = findViewById(R.id.radio_normal);
-        rbScientific = findViewById(R.id.radio_scientific);
-        //mControler = new Controller();
+
         mNewController = new ControllerNew();
+        mPolyController = new polynomialController();
+        polyView = (LinearLayout) findViewById(R.id.polyView);
 
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//get text for printing
-
-            }
-        });
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button1.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button1.getText()));
             }
         });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button2.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button2.getText()));
             }
         });
@@ -82,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button3.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button3.getText()));
             }
         });
@@ -92,9 +84,6 @@ public class MainActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button4.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button4.getText()));
             }
         });
@@ -102,9 +91,6 @@ public class MainActivity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button5.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button5.getText()));
             }
         });
@@ -112,9 +98,6 @@ public class MainActivity extends AppCompatActivity {
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button6.getText().toString()));
-                //  display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button6.getText()));
             }
         });
@@ -122,9 +105,6 @@ public class MainActivity extends AppCompatActivity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button7.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button7.getText()));
             }
         });
@@ -132,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button8.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button8.getText()));
             }
         });
@@ -142,10 +119,6 @@ public class MainActivity extends AppCompatActivity {
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button9.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button9.getText()));
             }
         });
@@ -153,23 +126,38 @@ public class MainActivity extends AppCompatActivity {
         button0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // diplay_line1.setText(mControler.numericTextControl((String) diplay_line1.getText(), button0.getText().toString()));
-                //display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
-
                 diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button0.getText()));
             }
         });
 
+
+
+        buttonX.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               diplay_line1.setText(mPolyController.xTextController((String) diplay_line1.getText(), (String) buttonX.getText()));
+            }
+        });
+
+        buttonPower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               diplay_line1.setText(mPolyController.powerTextController((String) diplay_line1.getText(), (String) buttonPower.getText()));
+            }
+        });
+
+        buttonSquared.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // diplay_line1.setText(mNewController.numericTextController((String) diplay_line1.getText(), (String) button0.getText()));
+            }
+        });
+
+
         buttonDot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.dotTextControl((String) diplay_line1.getText(), buttonDot.getText().toString()));
-                // display_line2.setText(mControler.numericTextControlDisplayTwo((String)display_line2.getText()));
                 diplay_line1.setText(mNewController.dotTextControl((String) diplay_line1.getText(), (String) buttonDot.getText()));
-
-
-                // diplay_line1.setText(mNewController.numericTextController((String)diplay_line1.getText(),(String) button1.getText()));
             }
         });
 
@@ -177,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.operatorTextControl((String) diplay_line1.getText(), buttonAdd.getText().toString()));
-
                 diplay_line1.setText(mNewController.operatorText((String) diplay_line1.getText(), (String) buttonAdd.getText()));
             }
 
@@ -187,7 +173,6 @@ public class MainActivity extends AppCompatActivity {
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //diplay_line1.setText(mControler.operatorTextControl((String) diplay_line1.getText(), buttonSub.getText().toString()));
                 diplay_line1.setText(mNewController.operatorText((String) diplay_line1.getText(), (String) buttonSub.getText()));
 
             }
@@ -197,8 +182,6 @@ public class MainActivity extends AppCompatActivity {
         buttonMul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //diplay_line1.setText(mControler.operatorTextControl((String) diplay_line1.getText(), buttonMul.getText().toString()));
                 diplay_line1.setText(mNewController.operatorText((String) diplay_line1.getText(), (String) buttonMul.getText()));
 
             }
@@ -208,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
         buttonDiv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // diplay_line1.setText(mControler.operatorTextControl((String) diplay_line1.getText(), buttonDiv.getText().toString()));
                 diplay_line1.setText(mNewController.operatorText((String) diplay_line1.getText(), (String) buttonDiv.getText()));
 
             }
@@ -218,12 +200,7 @@ public class MainActivity extends AppCompatActivity {
         buttonEq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // diplay_line1.setText(mControler.equalControllerDisplayOne((String) diplay_line1.getText(), buttonEq.getText().toString()));
-
-                //display_line2.setText(mControler.equalControllerDisplayTwo((String) diplay_line1.getText(), buttonEq.getText().toString()));
                 display_line2.setText(mNewController.equalDisplayTwo((String) diplay_line1.getText()));
-                // diplay_line1.setText(mNewController.equalDisplayOne((String) diplay_line1.getText()));
 
             }
         });
@@ -231,27 +208,14 @@ public class MainActivity extends AppCompatActivity {
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mNewController.clearClontroller();
+                mNewController.clearController();
                 diplay_line1.setText("");
                 display_line2.setText("");
             }
         });
 
-        rbNormal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               mNewController.changeMode(true);
-            }
-        });
-
-        rbScientific.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mNewController.changeMode(false);
-            }
-        });
     }
-/*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -264,17 +228,30 @@ public class MainActivity extends AppCompatActivity {
       //  Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
             case R.id.search_item:
-                 mNewController.changeMode("normal");
+                 mNewController.changeMode(ControllerNew.Mode.NORMAL);
+                 polyView.setVisibility(View.GONE);
                 return true;
             case R.id.upload_item:
-                 mNewController.changeMode("scientific");
+                 mNewController.changeMode(ControllerNew.Mode.SCIENTIFIC);
+                polyView.setVisibility(View.GONE);
                 return true;
             case R.id.copy_item:
-                 mNewController.changeMode("numeric");
+                polyView.setVisibility(View.VISIBLE);
+                mNewController.changeMode(ControllerNew.Mode.ROOT);
+              /*   switch (item.getItemId()){
+                     case R.id.root:
+                         mNewController.changeMode(ControllerNew.Mode.ROOT);
+                         return true;
+                     case R.id.green:
+                         mNewController.changeMode(ControllerNew.Mode.ADDSUM);
+                         return true;
+                     case R.id.blue:
+                         mNewController.changeMode(ControllerNew.Mode.MULDIV);
+                         return true;
+                 } */
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
-    } */
+    }
 }

@@ -137,6 +137,19 @@ public class ExampleUnitTest {
         String p = c6.numericTextController("2.","-");
         assertEquals("2.",p);
     }
+/*
+    @Test
+    public void splitPolynomial_isCorrect(){
+        ExpressionControllerPolynomials e1 = new ExpressionControllerPolynomials();
+        ArrayList<String> a1 = new ArrayList<String>();
+        a1.add("3X^3");
+        a1.add("4X^2");
+        a1.add("5X");
+        a1.add("2");
+        ArrayList<PolynomialData> p = e1.splitPolynomial(a1);
+        System.out.println(p);
+
+    } */
 
 
 }

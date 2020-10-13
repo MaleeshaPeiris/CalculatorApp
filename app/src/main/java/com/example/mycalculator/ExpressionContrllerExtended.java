@@ -1,7 +1,7 @@
 package com.example.mycalculator;
 
 import java.util.ArrayList;
-
+// controlling expression for calculations in scientific mode
 public class ExpressionContrllerExtended extends ExpressionController {
     ArrayList<String> newValueOrder = new ArrayList<String>();
     float answer;
@@ -33,10 +33,6 @@ public class ExpressionContrllerExtended extends ExpressionController {
          return answer;
 
     }
-
-
-
-//evaluate expression using binary
 
 
 

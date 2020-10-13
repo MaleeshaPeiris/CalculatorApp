@@ -12,12 +12,12 @@ public class ExpressionController {
     String[] values;
     float num1,num2;
     char operator;
-    //boolean normalMode;
+
 
     public void clearData(){
         operators.clear();
-      //  numericValues.clear();
     }
+
 
 
     public int getOpCount(String value1){
@@ -26,13 +26,10 @@ public class ExpressionController {
         for (int i=0; i < value1.length(); i++) {
             if (value1.charAt(i) == '+' || value1.charAt(i) == '-' ||
                     value1.charAt(i) == '/' || value1.charAt(i) == '*') {
-
                 opCount++;
                 operators.add(value1.charAt(i));
-
             }
         }
-
         return opCount;
     }
 
