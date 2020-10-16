@@ -1,6 +1,7 @@
 package com.example.mycalculator;
 
 public class polynomialController extends ControllerNew {
+
     @Override
     public String clearController() {
         return super.clearController();
@@ -39,6 +40,7 @@ public class polynomialController extends ControllerNew {
     @Override
     public String operatorText(String num1, String num2) {
         return super.operatorText(num1, num2);
+
     }
 
     @Override
@@ -85,6 +87,7 @@ public class polynomialController extends ControllerNew {
         this.num1=num1;
         this.num2=num2;
 
+
         if(hasDisplayed==true){
             clearController();
             dOneFullText=num2;
@@ -95,7 +98,7 @@ public class polynomialController extends ControllerNew {
                 dOneFullText=num1;
             }
             else{
-                dOneFullText=num1+num2;
+                    dOneFullText = num1 + num2;
             }
 
         }

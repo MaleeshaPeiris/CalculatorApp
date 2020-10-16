@@ -10,7 +10,7 @@ public class ControllerNew {
     private ExpressionController normalController = new ExpressionController();
     private ExpressionController rootCalculator = new ExpressionControllerPolynomials();
 
-    public enum Mode{SCIENTIFIC,NORMAL,ROOT, ADDSUM,MULDIV}
+    public enum Mode{SCIENTIFIC,NORMAL,ROOT}
     public Mode mMode;
 
     public String clearController(){
@@ -19,6 +19,7 @@ public class ControllerNew {
         hasDisplayed=false;
         dOneFullText="";
         scientificController.clearData();
+        rootCalculator.clearData();
         return "";
     }
 
@@ -27,8 +28,6 @@ public class ControllerNew {
         currentController= normalController;
     }
 
-
-// cretae class called references and add static
 
     public void changeMode(Mode m){
 
@@ -41,13 +40,13 @@ public class ControllerNew {
             else if(m==Mode.ROOT){
                 currentController=rootCalculator;
             }
-            else if(m==Mode.ADDSUM){
+           /* else if(m==Mode.ADDSUM){
                 currentController=rootCalculator;
 
             }
             else if(m==Mode.MULDIV){
                 currentController=rootCalculator;
-            }
+            } */
             mMode=m;
     }
 
@@ -83,7 +82,7 @@ public class ControllerNew {
         }
         else{
             if(num1==""){
-                if(num2 == "-"){
+                if(num2.equals("-")){
                     dOneFullText = "-";
                 }
                 else {
@@ -91,12 +90,14 @@ public class ControllerNew {
                 }
             }
             else{
+
                 if(num1.endsWith("+") || num1.endsWith("-") || num1.endsWith("/") || num1.endsWith("*") || num1.endsWith(".")) {
                     num2 = "";
                     dOneFullText = num1;
                 }
                 else {
                     dOneFullText = num1 + num2;
+
                 }
             }
         }
@@ -124,7 +125,7 @@ public class ControllerNew {
         }
         return dTwoFullText;
     }
-   // public void deleteController(){}
+
 
 
 
@@ -138,20 +139,21 @@ public class ControllerNew {
         }
         else{
             if(num1==""){
-                    dOneFullText = num1;
+                    dOneFullText = "0.";
             }
             else{
-                if(num1.endsWith("+") || num1.endsWith("-") || num1.endsWith("/") || num1.endsWith("*") || num1.endsWith(".")) {
+                if(num1.endsWith(".") || num1.endsWith("X")) {
                     num2 = "";
                     dOneFullText = num1;
                 }
+                if(num1.endsWith("-") || num1.endsWith("+")  || num1.endsWith("/") || num1.endsWith("*")){
+                    dOneFullText= num1 + "0.";
+                }
+
+                //if(){} add code to restrict a number from having two dots
 
                 else {
-
-                        // add code to restrict a number from having two dots
                         dOneFullText = num1 + num2;
-
-
                 }
             }
         }

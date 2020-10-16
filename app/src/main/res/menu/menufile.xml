@@ -5,23 +5,6 @@
     <item android:id="@+id/upload_item"
         android:title="Scientific" />
     <item android:id="@+id/copy_item"
-        android:title="Numerical" >
-        <menu>
-            <item
-                android:id="@+id/root"
-                android:title="roots"
-
-                />
-            <item
-                android:id="@+id/green"
-                android:title="Addition/Subtraction"
-
-                />
-            <item
-                android:id="@+id/blue"
-                android:title="Multiplication/Division"
-
-                />
-        </menu>
+        android:title="Root" >
     </item>
 </menu>

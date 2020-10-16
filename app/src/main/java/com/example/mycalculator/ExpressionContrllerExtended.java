@@ -21,16 +21,35 @@ public class ExpressionContrllerExtended extends ExpressionController {
         x = value1;
         opCount = getOpCount(value1);
         storeValues(value1);
-         for(int i =0; i<operators.size();i++ ){
 
-             newValueOrder.add(numericValues.get(i));
-             newValueOrder.add(String.valueOf(operators.get(i)));
-         }
+        if(operators.size()==numericValues.size()){
 
-         newValueOrder.add(numericValues.get(operators.size()));
-         answerText = finalAnswer(newValueOrder);
-         answer = Float.parseFloat(answerText);
-         return answer;
+            for (int i = 0; i < operators.size(); i++) {
+
+                newValueOrder.add(String.valueOf(operators.get(i)));
+                newValueOrder.add(numericValues.get(i));
+            }
+
+            String x = newValueOrder.get(0)+newValueOrder.get(1);
+            newValueOrder.remove(0);
+            newValueOrder.set(0,x);
+            answerText = finalAnswer(newValueOrder);
+            answer = Float.parseFloat(answerText);
+            return answer;
+        }
+
+        else {
+            for (int i = 0; i < operators.size(); i++) {
+
+                newValueOrder.add(numericValues.get(i));
+                newValueOrder.add(String.valueOf(operators.get(i)));
+            }
+
+            newValueOrder.add(numericValues.get(operators.size()));
+            answerText = finalAnswer(newValueOrder);
+            answer = Float.parseFloat(answerText);
+            return answer;
+        }
 
     }
 
@@ -128,5 +147,11 @@ public class ExpressionContrllerExtended extends ExpressionController {
         answerText = array.get(0);
         return answerText;
     }
+
+
+
+
+
+
 
 }

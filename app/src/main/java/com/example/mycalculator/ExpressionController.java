@@ -16,6 +16,7 @@ public class ExpressionController {
 
     public void clearData(){
         operators.clear();
+      //  numericValues.clear();
     }
 
 
@@ -39,6 +40,9 @@ public class ExpressionController {
         this.value1=value1;
         values = value1.split("\\+|\\-|\\/|\\*",opCount+1);
         numericValues = new ArrayList<String>(Arrays.asList(values));
+        if(values[0].equals("")){
+            numericValues.remove(0);
+        }
         values=null;
 
     }
@@ -52,34 +56,60 @@ public class ExpressionController {
         operators.clear();
         opCount = getOpCount(value1);
         storeValues(value1);
+        if(operators.size()==numericValues.size()){
+            num1= Float.parseFloat(operators.get(0)+numericValues.get(0));
+            num2=0;
+            int  j = 1;
+            for(int i=1;i < numericValues.size();i++){
+                num2 = Float.parseFloat(numericValues.get(i));
+                operator = operators.get(j);
 
+                if(operator == '+'){
+                    num1 = num1 + num2;
+                }
 
-        num1 = Float.parseFloat(numericValues.get(0));
-        num2=0;
-       int  j = 0;
-        for(int i=1;i < numericValues.size();i++){
-            num2 = Float.parseFloat(numericValues.get(i));
-           operator = operators.get(j);
+                else if(operator=='-'){
+                    num1 = num1 - num2;
+                }
 
-            if(operator == '+'){
-                num1 = num1 + num2;
+                else if(operator=='/') {
+                    num1 = num1 / num2;
+                }
+
+                else if(operator=='*'){
+                    num1= num1*num2;
+                }
+
+                j++;
             }
-
-            else if(operator=='-'){
-                num1 = num1 - num2;
-            }
-
-            else if(operator=='/') {
-                num1 = num1 / num2;
-            }
-
-            else if(operator=='*'){
-                num1= num1*num2;
-            }
-
-           j++;
         }
+        else {
+            num1 = Float.parseFloat(numericValues.get(0));
+            num2=0;
+            int  j = 0;
+            for(int i=1;i < numericValues.size();i++){
+                num2 = Float.parseFloat(numericValues.get(i));
+                operator = operators.get(j);
 
+                if(operator == '+'){
+                    num1 = num1 + num2;
+                }
+
+                else if(operator=='-'){
+                    num1 = num1 - num2;
+                }
+
+                else if(operator=='/') {
+                    num1 = num1 / num2;
+                }
+
+                else if(operator=='*'){
+                    num1= num1*num2;
+                }
+
+                j++;
+            }
+        }
         return num1;
     }
 
