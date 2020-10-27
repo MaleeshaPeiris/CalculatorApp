@@ -1,19 +1,23 @@
 package com.example.mycalculator;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-public class ExpressionControllerPolynomials extends ExpressionController {
+public class ExpressionControllerPolynomials extends ExpressionController implements ThreadCallBack {
 
     ArrayList<PolynomialData> data = new ArrayList<PolynomialData>();
-    ArrayList<Object> firstExpression = new ArrayList<Object>();
-    ArrayList<Object> orderedExpression = new ArrayList<Object>();
     RootFinder rootFinder = new NewtonsRootFinder();
-
-
+    RootsThread threadclass = new RootsThread(data,this,0);
+    ArrayList<Float> allRoots = new ArrayList<Float>();
     String[] values;
     String p=null;
+    float rootVal;
+    int degree;
+
+
+
     @Override
     public void clearData() {
         data.clear();
@@ -21,7 +25,6 @@ public class ExpressionControllerPolynomials extends ExpressionController {
         rootFinder.clearData();
         super.clearData();
     }
-
 
 
     @Override
@@ -52,7 +55,19 @@ public class ExpressionControllerPolynomials extends ExpressionController {
     }
 
 
-
+    public void manageThread(int degree){
+        for(int i=0;i<degree;i++){
+            try{
+                ExecutorService executor= Executors.newFixedThreadPool(1);
+                executor.execute(threadclass);
+                executor.shutdown();
+            } catch(Exception err){
+                err.printStackTrace();
+                return;
+            }
+          //  RootsThread thead1 = new RootsThread(data,this);
+        }
+    }
 
 
     public void splitPolynomial(){
@@ -68,7 +83,6 @@ public class ExpressionControllerPolynomials extends ExpressionController {
             }
 
             else if(numericValues.get(i).contains("X")){
-                //values = numericValues.get(i).split("X",2);
                 if(numericValues.get(i).equals("X")){
                     p = "1";
                     }
@@ -105,20 +119,18 @@ public class ExpressionControllerPolynomials extends ExpressionController {
 
     @Override
     public float getAnswer(String value1)
-    {
 
+    {
         opCount = getOpCount(value1);
         storeValues(value1);
         splitPolynomial();
         if(operators.size()== numericValues.size()){
 
-
-
             for(int i=0; i<operators.size();i++){
                 data.get(i).coefficient = operators.get(i)+ data.get(i).coefficient;
             }
-
         }
+
         else {
             data.get(0).coefficient = "+" + data.get(0).coefficient;
             for (int i = 1; i < operators.size() + 1; i++) {
@@ -126,9 +138,27 @@ public class ExpressionControllerPolynomials extends ExpressionController {
             }
         }
         orderedExpression(data);
-
-        return rootFinder.findRoots(data);
+        degree= Integer.parseInt(data.get(0).power);
+      //  manageThread(degree);
+        Thread t = new Thread(threadclass);
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return rootVal;
     }
 
 
+
+    @Override
+    public void onRootRecieve(float root) {
+        rootVal = root;
+        allRoots.add(rootVal);
+    }
+}
+
+interface ThreadCallBack{
+    void onRootRecieve(float root);
 }

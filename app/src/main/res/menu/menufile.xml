@@ -7,4 +7,7 @@
     <item android:id="@+id/copy_item"
         android:title="Root" >
     </item>
+    <item android:id="@+id/matrix_item"
+        android:title="Matrices" >
+    </item>
 </menu>

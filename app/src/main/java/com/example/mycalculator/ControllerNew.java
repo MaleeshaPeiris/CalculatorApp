@@ -1,5 +1,7 @@
 package com.example.mycalculator;
 
+import java.util.ArrayList;
+
 public class ControllerNew {
 
     float dTwoValue;
@@ -9,7 +11,7 @@ public class ControllerNew {
     private ExpressionController scientificController = new ExpressionContrllerExtended();
     private ExpressionController normalController = new ExpressionController();
     private ExpressionController rootCalculator = new ExpressionControllerPolynomials();
-
+    ArrayList<String> roots = new ArrayList<String>();
     public enum Mode{SCIENTIFIC,NORMAL,ROOT}
     public Mode mMode;
 
@@ -20,6 +22,7 @@ public class ControllerNew {
         dOneFullText="";
         scientificController.clearData();
         rootCalculator.clearData();
+        roots.clear();
         return "";
     }
 
@@ -122,6 +125,7 @@ public class ControllerNew {
                 dTwoValue = currentController.getAnswer(num1);
                 dTwoFullText = String.valueOf(dTwoValue);
                 hasDisplayed = true;
+                roots.add(dTwoFullText);
         }
         return dTwoFullText;
     }

@@ -111,7 +111,7 @@ public class ExampleUnitTest {
     @Test
     public void operatorTextController_isCorrect1(){
         ControllerNew c6 = new ControllerNew();
-        String p = c6.numericTextController("","/");
+        String p = c6.operatorText("","/");
         assertEquals("",p);
 
     }
@@ -119,14 +119,14 @@ public class ExampleUnitTest {
     @Test
     public void operatorTextController_isCorrect2(){
         ControllerNew c6 = new ControllerNew();
-        String p = c6.numericTextController("","-");
+        String p = c6.operatorText("","-");
         assertEquals("-",p);
     }
 
     @Test
     public void operatorTextController_isCorrect3(){
         ControllerNew c6 = new ControllerNew();
-        String p = c6.numericTextController("5-","/");
+        String p = c6.operatorText("5-","/");
         assertEquals("5-",p);
 
     }
@@ -134,9 +134,55 @@ public class ExampleUnitTest {
     @Test
     public void operatorTextController_isCorrect4(){
         ControllerNew c6 = new ControllerNew();
-        String p = c6.numericTextController("2.","-");
+        String p = c6.operatorText("2.","-");
         assertEquals("2.",p);
     }
+
+    @Test
+    public void NewtonsRootFinder_isCorrect1(){   // normal situation
+        NewtonsRootFinder nrf = new NewtonsRootFinder();
+        PolynomialData pData1 = new PolynomialData("+1","2");
+        PolynomialData pData2 = new PolynomialData("+2","1");
+        PolynomialData pData3 = new PolynomialData("+1","0");
+        ArrayList<PolynomialData> p1 = new ArrayList<PolynomialData>();
+        p1.add(pData1);
+        p1.add(pData2);
+        p1.add(pData3);
+        float x =nrf.findRoots(p1);
+        assertEquals("-0.9921875",x);
+    }
+
+
+    @Test
+    public void NewtonsRootFinder_isCorrect2(){ // 0/0 situation
+        NewtonsRootFinder nrf = new NewtonsRootFinder();
+        PolynomialData pData1 = new PolynomialData("4","2");
+      //  PolynomialData pData2 = new PolynomialData("2","0");
+      //  PolynomialData pData3 = new PolynomialData("1","0");
+        ArrayList<PolynomialData> p2 = new ArrayList<PolynomialData>();
+        p2.add(pData1);
+     //   p1.add(pData2);
+      //  p1.add(pData3);
+        float x =nrf.findRoots(p2);
+        assertEquals("0.0",x);
+    }
+
+
+    @Test
+    public void NewtonsRootFinder_isCorrect3(){ /// divided by zero situation
+        NewtonsRootFinder nrf = new NewtonsRootFinder();
+        PolynomialData pData1 = new PolynomialData("4","1");
+        PolynomialData pData2 = new PolynomialData("2","0");
+        //  PolynomialData pData3 = new PolynomialData("1","0");
+        ArrayList<PolynomialData> p3 = new ArrayList<PolynomialData>();
+        p3.add(pData1);
+        p3.add(pData2);
+        //  p1.add(pData3);
+        float x =nrf.findRoots(p3);
+        assertEquals("0.0",x);
+    }
+
+
 /*
     @Test
     public void splitPolynomial_isCorrect(){

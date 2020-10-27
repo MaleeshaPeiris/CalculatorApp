@@ -1,9 +1,12 @@
 package com.example.mycalculator;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +15,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import static com.example.mycalculator.MatrixActivity.REQUEST_CODE;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,13 +31,23 @@ public class MainActivity extends AppCompatActivity {
     polynomialController mPolyController;
     Button buttonDot;
     LinearLayout polyView;
-
+    static final int GET_MATRIX_DATA = 1;
+    Matrix matrix;
+    ArrayList<Matrix> mMatricesList = new ArrayList<Matrix>();
+    MatrixController matrixController = new MatrixController();
+    String matrixText;
+    int rowSize;
+    int columnSize;
 
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         if (getIntent().getExtras() != null) {
+             Matrix matrix = getIntent().getParcelableExtra("matrix");
+         }
         button1 = findViewById(R.id.button1);
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
@@ -217,6 +235,35 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == GET_MATRIX_DATA) {
+
+            if (resultCode == RESULT_OK) {
+                //final String result = data.getStringExtra(MatrixActivity.Result_DATA);
+                Intent intent=getIntent();
+                matrix=data.getParcelableExtra("matrix");
+
+            }
+        }
+
+    }
+
+   // @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent().getExtras() != null) {
+            Intent intent = getIntent();
+            mMatricesList = intent.getParcelableArrayListExtra("matrixList");
+            //matrixController = new MatrixController(matrix.getTextData(),matrix.getRow(),matrix.getColumn());
+
+            matrixController.storeMatrices(mMatricesList);
+
+        }
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menufile, menu);
@@ -250,8 +297,16 @@ public class MainActivity extends AppCompatActivity {
                          return true;
                  } */
                 return true;
+            case R.id.matrix_item:
+                openMatrixActivity();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void openMatrixActivity(){
+        Intent intent = new Intent(this,MatrixActivity.class);
+        startActivityForResult(intent,GET_MATRIX_DATA);
     }
 }

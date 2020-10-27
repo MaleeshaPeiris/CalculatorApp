@@ -51,7 +51,7 @@ public class NewtonsRootFinder extends RootFinder {
            root =  singleIteration(p,root);
            count++;
        }
-        while (Math.abs(valueofFX(p,root)) > errorTolerance || count> noOfIterations );
+        while (Math.abs(valueofFX(p,root)) > errorTolerance && count< noOfIterations );
 
         return root;
     }
@@ -77,7 +77,7 @@ public class NewtonsRootFinder extends RootFinder {
         else{
             temp_root = x - (valueofFX(function,x) / difValue);
         }
-        
+
         return temp_root;
     }
 }
