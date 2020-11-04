@@ -46,7 +46,6 @@ public class ExpressionControllerPolynomials extends ExpressionController implem
     public void storeValues(String value1) {
         this.value1=value1;
         values = value1.split("\\+|\\-",opCount+1);
-
         numericValues = new ArrayList<String>(Arrays.asList(values));
         if(values[0].equals("")){
             numericValues.remove(0);
@@ -55,23 +54,8 @@ public class ExpressionControllerPolynomials extends ExpressionController implem
     }
 
 
-    public void manageThread(int degree){
-        for(int i=0;i<degree;i++){
-            try{
-                ExecutorService executor= Executors.newFixedThreadPool(1);
-                executor.execute(threadclass);
-                executor.shutdown();
-            } catch(Exception err){
-                err.printStackTrace();
-                return;
-            }
-          //  RootsThread thead1 = new RootsThread(data,this);
-        }
-    }
-
 
     public void splitPolynomial(){
-
         int x = numericValues.size();
         for(int i=0; i< x ; i++){
             if(numericValues.get(i).contains("X^")){
@@ -81,32 +65,27 @@ public class ExpressionControllerPolynomials extends ExpressionController implem
                 data.add(p1);
                 values=null;
             }
-
             else if(numericValues.get(i).contains("X")){
-                if(numericValues.get(i).equals("X")){
+                if(numericValues.get(i).equals("X"))
+                {
                     p = "1";
-                    }
+                }
                 else
-                        {
-                            p = numericValues.get(i).replace("X","");
-
+                {
+                    p = numericValues.get(i).replace("X","");
                 }
                 PolynomialData p2 = new PolynomialData(p,"1");
                 data.add(p2);
                 values=null;
             }
-
             else {
                 p = numericValues.get(i);
                 PolynomialData p3 = new PolynomialData(p,"0");
                 data.add(p3);
                 values=null;
-
             }
         }
-
     }
-
 
 
     public void orderedExpression(ArrayList<PolynomialData> x){
@@ -115,31 +94,24 @@ public class ExpressionControllerPolynomials extends ExpressionController implem
     }
 
 
-
-
     @Override
-    public float getAnswer(String value1)
-
-    {
+    public float getAnswer(String value1){
         opCount = getOpCount(value1);
         storeValues(value1);
-        splitPolynomial();
+        splitPolynomial(); // adds polynomial data to an object array of PolynomialData
         if(operators.size()== numericValues.size()){
-
             for(int i=0; i<operators.size();i++){
                 data.get(i).coefficient = operators.get(i)+ data.get(i).coefficient;
             }
         }
-
         else {
             data.get(0).coefficient = "+" + data.get(0).coefficient;
             for (int i = 1; i < operators.size() + 1; i++) {
                 data.get(i).coefficient = operators.get(i - 1) + data.get(i).coefficient;
             }
         }
-        orderedExpression(data);
-        degree= Integer.parseInt(data.get(0).power);
-      //  manageThread(degree);
+        orderedExpression(data); // reorders the polynomial expression considering the degree
+        degree = Integer.parseInt(data.get(0).power);
         Thread t = new Thread(threadclass);
         t.start();
         try {

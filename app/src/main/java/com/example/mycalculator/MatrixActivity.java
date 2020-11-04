@@ -35,9 +35,10 @@ public class MatrixActivity extends AppCompatActivity {
     String arrayText;
     int arrayRow,arrayColumn;
     ArrayList<Matrix> matricesList = new ArrayList<Matrix>();
-    Button showMatrixbtn,clearMatrixbtn,selectfile,buttonBack;
+    Button multiplyMatrixbtn,clearMatrixbtn,selectfile,buttonBack;
     TextView matrixTextView;
     Matrix matrix1;
+    boolean hasExtras=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MatrixActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.backButton);
         selectfile = findViewById(R.id.selectFileButton);
         clearMatrixbtn = findViewById(R.id.clearMatrixButton);
-        showMatrixbtn = findViewById(R.id.showMatrixButton);
+        multiplyMatrixbtn = findViewById(R.id.multiplyMatrixButton);
         matrixTextView = findViewById(R.id.matrixText);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +68,19 @@ public class MatrixActivity extends AppCompatActivity {
                performFileSearch();
             }
         });
-    }
+        multiplyMatrixbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(hasExtras==false){
+                    Toast.makeText(getBaseContext(), "Select Files To Mltiply",Toast.LENGTH_SHORT).show();
+                }
+                else {
 
+                    multiplyMatrices();
+                }
+            }
+        });
+    }
 
 
     private void performFileSearch(){
@@ -89,15 +101,7 @@ public class MatrixActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == READ_REQUEST_CODE && resultCode==RESULT_OK) {
             if(data != null){
-               // showMatrixbtn.setVisibility(View.VISIBLE);
-               // matrixTextView.setVisibility(View.VISIBLE);
-              /*  Uri uri = data.getData();
-                try {
-                    readTextFromUri(uri);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } */
-
+                hasExtras=true;
                 if(null != data.getClipData()) { // checking multiple selection or not
                     for(int i = 0; i < data.getClipData().getItemCount(); i++) {
                         Uri uri = data.getClipData().getItemAt(i).getUri();
@@ -124,7 +128,6 @@ public class MatrixActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void readTextFromUri(Uri uri) throws IOException {
-        StringBuilder stringBuilder = new StringBuilder();
         try (InputStream inputStream = getContentResolver().openInputStream(uri);
              BufferedReader reader = new BufferedReader(
                      new InputStreamReader(Objects.requireNonNull(inputStream)))) {
@@ -143,10 +146,6 @@ public class MatrixActivity extends AppCompatActivity {
                     }
                     else {
                         arrayText=line;
-                      //  arraySize = arrayColumn * arrayRow;
-                      //  twoDArray = new double[arrayRow][arrayColumn];
-                      //  storeTextValue(line);
-                     //   matrix= new Matrix(arrayRow,arrayColumn,twoDArray);
                         matrix1=new Matrix(arrayRow,arrayColumn,arrayText);
                         matricesList.add(matrix1);
                     }
@@ -172,18 +171,18 @@ public class MatrixActivity extends AppCompatActivity {
 
     public void backToMain(){
         Intent openMainActivity = new Intent(MatrixActivity.this, MainActivity.class);
-        openMainActivity.putParcelableArrayListExtra("matrixList",matricesList);
-        setResult(RESULT_OK);
-        openMainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivityForResult(openMainActivity, REQUEST_CODE);
-        clearData();
         finish();
-
-
     }
 
-    public void clearData(){
-        matricesList.clear();
+    public void multiplyMatrices(){
+        //getIntent().putParcelableArrayListExtra("matrixList",matricesList);
+        Intent openMainActivity = new Intent(MatrixActivity.this, MainActivity.class);
+        openMainActivity.putParcelableArrayListExtra("matrixList",matricesList);
+        setResult(RESULT_OK,openMainActivity);
+      //openMainActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+      //startActivityForResult(openMainActivity, REQUEST_CODE);
+        finish();
     }
+
 
 }

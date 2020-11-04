@@ -21,15 +21,12 @@ public class PolynomialDifferentiators {
                 differenciatedCoefficient = String.valueOf((x+1)* Integer.parseInt(elements.get(i).coefficient));
                 PolynomialData p4 = new PolynomialData(differenciatedCoefficient,differenciatedPower);
                 differentiatedData.add(p4);
-
             }
             else {
                 break;
             }
-
         }
         return differentiatedData;
     }
-
 
 }

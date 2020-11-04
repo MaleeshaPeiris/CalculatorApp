@@ -16,9 +16,7 @@ public class ExpressionController {
 
     public void clearData(){
         operators.clear();
-      //  numericValues.clear();
     }
-
 
 
     public int getOpCount(String value1){
@@ -44,7 +42,6 @@ public class ExpressionController {
             numericValues.remove(0);
         }
         values=null;
-
     }
 
 
@@ -52,7 +49,6 @@ public class ExpressionController {
 
     public float getAnswer(String value1){
         this.value1=value1;
- //       numericValues.clear();
         operators.clear();
         opCount = getOpCount(value1);
         storeValues(value1);

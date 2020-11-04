@@ -1,19 +1,15 @@
 package com.example.mycalculator;
 
 public class PolynomialData implements Comparable {
-    String operator;
+
     String power;
     String coefficient;
     PolynomialData p;
 
     public PolynomialData(String timesNumber, String power) {
-
         this.power = power;
         this.coefficient = timesNumber;
     }
-
-
-
 
 
     @Override

@@ -33,9 +33,8 @@ android:orientation="vertical">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Show Matrix"
-            android:id="@+id/showMatrixButton"/>
+            android:text="Multiply Matrices"
+            android:id="@+id/multiplyMatrixButton"/>
 
         <TextView
             android:layout_width="match_parent"

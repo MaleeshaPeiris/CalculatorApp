@@ -10,19 +10,21 @@ public class MatrixController {
     List<String> items = new ArrayList<String>();
     double[][] twoDArray;
     int index;
-    List<double[][]> listOfMatrices= new ArrayList<double[][]>();
+    //List<double[][]> listOfMatrices= new ArrayList<double[][]>();
+    Matrix matrixObject,answerMatrix;
+    ArrayList<Matrix> matrixList = new ArrayList<Matrix>();
 
 
 
-    public void storeMatrices(ArrayList<Matrix> matrixList){
+    public ArrayList<Matrix> storeMatrices(ArrayList<Matrix> matrixList){
 
         for(index=0; index<matrixList.size();index++) {
             matrixText = matrixList.get(index).getTextData();
             rowSize = matrixList.get(index).getRow();
             columnSize = matrixList.get(index).getColumn();
             storeSingleMatrix(matrixText);
-
         }
+        return matrixList;
     }
 
     public void storeSingleMatrix(String text){
@@ -32,10 +34,22 @@ public class MatrixController {
             for (int j = 0; j < columnSize; j++) {
                 String x = items.get(columnSize * i + j);
                 twoDArray[i][j] = Double.parseDouble(x);
-
             }
-
         }
-        listOfMatrices.add(twoDArray);
+        matrixObject = new Matrix(rowSize,columnSize,twoDArray);
+        matrixList.add(matrixObject);
+        //listOfMatrices.add(twoDArray);
+    }
+
+    public String getAnswer(double[][] answer){
+        twoDArray=answer;
+        StringBuilder sb = new StringBuilder();
+
+        for (double[] row :twoDArray ) {
+            sb.append(Arrays.toString(row));
+        }
+
+        String result = sb.toString();
+        return result;
     }
 }

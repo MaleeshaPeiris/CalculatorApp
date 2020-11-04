@@ -43,13 +43,6 @@ public class ControllerNew {
             else if(m==Mode.ROOT){
                 currentController=rootCalculator;
             }
-           /* else if(m==Mode.ADDSUM){
-                currentController=rootCalculator;
-
-            }
-            else if(m==Mode.MULDIV){
-                currentController=rootCalculator;
-            } */
             mMode=m;
     }
 
@@ -93,7 +86,6 @@ public class ControllerNew {
                 }
             }
             else{
-
                 if(num1.endsWith("+") || num1.endsWith("-") || num1.endsWith("/") || num1.endsWith("*") || num1.endsWith(".")) {
                     num2 = "";
                     dOneFullText = num1;
@@ -104,14 +96,8 @@ public class ControllerNew {
                 }
             }
         }
-
         return dOneFullText;
     }
-
-
-
-
-
 
 
     public String equalDisplayTwo(String num1){
@@ -121,7 +107,6 @@ public class ControllerNew {
         }
 
         else {
-
                 dTwoValue = currentController.getAnswer(num1);
                 dTwoFullText = String.valueOf(dTwoValue);
                 hasDisplayed = true;
@@ -129,9 +114,6 @@ public class ControllerNew {
         }
         return dTwoFullText;
     }
-
-
-
 
 
     public String dotTextControl(String num1, String num2){
@@ -153,9 +135,6 @@ public class ControllerNew {
                 if(num1.endsWith("-") || num1.endsWith("+")  || num1.endsWith("/") || num1.endsWith("*")){
                     dOneFullText= num1 + "0.";
                 }
-
-                //if(){} add code to restrict a number from having two dots
-
                 else {
                         dOneFullText = num1 + num2;
                 }
@@ -163,7 +142,5 @@ public class ControllerNew {
         }
         return dOneFullText;
     }
-
-
 
 }

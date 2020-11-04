@@ -29,9 +29,7 @@ public class ExampleUnitTest {
     @Test
     public void getAnswer_isCorrect2() {
         ExpressionContrllerExtended e1 = new ExpressionContrllerExtended();
-        // float x = e.getAnswer("30 + 34 -1");
         float y = e1.getAnswer("2*2*0*2");
-        // assertEquals(63.0, x,0.1);
         assertEquals(0.0,y,0.01);
     }
 

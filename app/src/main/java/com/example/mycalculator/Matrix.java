@@ -21,6 +21,9 @@ public class Matrix implements  Parcelable {
         this.column = column;
         this.textData = textData;
     }
+    public Matrix(double[][] data) {
+        this.data = data;
+    }
 
     protected Matrix(Parcel in) {
         row = in.readInt();

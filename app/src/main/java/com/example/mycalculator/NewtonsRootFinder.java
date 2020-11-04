@@ -17,12 +17,10 @@ public class NewtonsRootFinder extends RootFinder {
     public void clearData(){
         xOfXAnswer=0;
         predictedRoot=0;
-
         root=0;
         initialGuess=0;
         x=initialGuess;
         differentiatedList.clear();
-
     }
 
     @Override
@@ -43,16 +41,15 @@ public class NewtonsRootFinder extends RootFinder {
         return returnVal;
     }
 
+
     public float getRoot(ArrayList<PolynomialData> p) {
         float root = initialGuess;
         int count=0;
-
         do {
            root =  singleIteration(p,root);
            count++;
        }
         while (Math.abs(valueofFX(p,root)) > errorTolerance && count< noOfIterations );
-
         return root;
     }
 
@@ -60,24 +57,17 @@ public class NewtonsRootFinder extends RootFinder {
     private float singleIteration(ArrayList<PolynomialData> function,float x){
         float functionValue = valueofFX(function,x);
         float temp_root= 0;
-
         if(functionValue==0){
             temp_root=x;
             return temp_root;
         }
-
         float difValue = valueofFX(differentiatedList,x);
-
-
         if(difValue==0){
-        temp_root=temp_root+1;
-            //return temp_root;
+            temp_root=temp_root+1;
         }
-
         else{
             temp_root = x - (valueofFX(function,x) / difValue);
         }
-
         return temp_root;
     }
 }
